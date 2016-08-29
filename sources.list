@@ -1,0 +1,9 @@
+deb http://mirror.kku.ac.th/debian/ jessie main contrib non-free
+deb-src http://mirror.kku.ac.th/debian/ jessie main contrib non-free
+
+deb http://mirror.kku.ac.th/debian/ jessie-updates main contrib non-free
+deb-src http://mirror.kku.ac.th/debian/ jessie-updates main contrib non-free
+
+deb http://mirror.kku.ac.th/debian/ jessie-backports main contrib non-free
+deb-src http://mirror.kku.ac.th/debian/ jessie-backports main contrib non-free
+

@@ -18,6 +18,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 ADD ./setPass.sh /home/setPass.sh
 
+
 ADD 000-laravel.conf /etc/apache2/sites-available/
 ADD 001-laravel-ssl.conf /etc/apache2/sites-available/
 
@@ -56,6 +57,12 @@ RUN    	rm -rf /home/firebird && \
     	rm -f /home/setPass.sh
     
    # install laravel
+
+ADD sources.list /etc/apt/sources.list
+   
+   
+RUN apt-get update && \
+	apt-get install git -qy
    
 RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-laravel 001-laravel-ssl
 
