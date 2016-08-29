@@ -1,7 +1,7 @@
 
 FROM php:apache
 
-#RUN echo "woohoo"
+
 
 
 WORKDIR /var/www/html
@@ -43,18 +43,27 @@ RUN apt-get update && \
     
   
     
-    docker-php-ext-install interbase pdo_firebird && \ 
+    docker-php-ext-install interbase pdo_firebird
     
     
     #clear part
-      rm -rf /home/firebird && \
-    rm -rf ${PREFIX}/*/.debug && \
-    apt-get purge -qy --auto-remove libncurses5-dev bzip2 curl gcc g++ make libicu-dev && \
-    apt-get clean -q && \
-    rm -rf /var/lib/apt/lists/* && \
+RUN    	rm -rf /home/firebird && \
+   	 	rm -rf ${PREFIX}/*/.debug && \
+    	#apt-get purge -qy --auto-remove libncurses5-dev bzip2 curl gcc g++ make libicu-dev && \
+    	apt-get clean -q && \
+    	rm -rf /var/lib/apt/lists/* && \
 
-    rm -f /home/setPass.sh
+    	rm -f /home/setPass.sh
     
+   # install laravel
+   
+RUN /usr/sbin/a2dissite '*' && /usr/sbin/a2ensite 000-laravel 001-laravel-ssl
+
+RUN /usr/bin/curl -sS https://getcomposer.org/installer | php
+RUN /bin/mv composer.phar /usr/local/bin/composer
+RUN /usr/local/bin/composer create-project laravel/laravel /var/www/laravel --prefer-dist
+RUN /bin/chown www-data:www-data -R /var/www/laravel/storage /var/www/laravel/bootstrap/cache
+ 
 
 VOLUME ["/databases", "/var/firebird/run", "/var/firebird/etc", "/var/firebird/log", "/var/firebird/system", "/tmp/firebird"]
 
@@ -63,6 +72,7 @@ EXPOSE 3050/tcp
 EXPOSE 80
 EXPOSE 443
 
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]
+#CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
-ENTRYPOINT ["/usr/local/firebird/bin/fbguard"]
+#ENTRYPOINT ["/usr/local/firebird/bin/fbguard"]
