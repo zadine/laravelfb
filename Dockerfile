@@ -53,7 +53,7 @@ RUN apt-get update && \
     apt-get clean -q && \
     rm -rf /var/lib/apt/lists/* && \
 
-    rm -f /home/setPass.sh && \
+    rm -f /home/setPass.sh
     
 
 VOLUME ["/databases", "/var/firebird/run", "/var/firebird/etc", "/var/firebird/log", "/var/firebird/system", "/tmp/firebird"]
